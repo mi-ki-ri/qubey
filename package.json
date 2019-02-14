@@ -10,7 +10,8 @@
     "start": "nuxt start",
     "build:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt build",
     "generate:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt generate",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "subtree": "git subtree push --prefix dist/ origin gh-pages"
   },
   "dependencies": {
     "cross-env": "^5.2.0",
