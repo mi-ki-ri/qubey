@@ -1,8 +1,8 @@
 const pkg = require('./package')
 
 module.exports = {
-
-  mode: "universal",
+  mode: 'spa',
+  //mode: "universal",
   router: {
     base: '/qubey/'
   },
