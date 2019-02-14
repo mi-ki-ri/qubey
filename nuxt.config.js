@@ -4,7 +4,7 @@ module.exports = {
 
   mode: "universal",
   router: {
-    base: '/<repository-name>/'
+    base: '/qubey/'
   },
   head: {
     title: pkg.name,
