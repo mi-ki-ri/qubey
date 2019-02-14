@@ -1,17 +1,11 @@
 const pkg = require('./package')
 
-const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+module.exports = {
+
+  mode: "universal",
   router: {
     base: '/<repository-name>/'
-  }
-} : {}
-
-module.exports = {
-  /*mode: 'spa',
-  
-  /*
-  ** Headers of the page
-  */
+  },
   head: {
     title: pkg.name,
     meta: [
