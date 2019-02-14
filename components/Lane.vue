@@ -16,7 +16,7 @@
             </div>
             <p class="myQubey" @click="setObj(i, $event)"
                 v-bind:style="{top: this.i * 32 + 'px',
-                transform: 'rotate('+ (this.i + 1) * 90 * this.snareOrElse +'deg)'}">&nbsp;</p>
+                transform: 'rotate('+ (this.i + 1) * 45 * this.snareOrElse +'deg)'}">&nbsp;</p>
             
         </div>
     </div>
