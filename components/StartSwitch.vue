@@ -1,7 +1,7 @@
 <template>
     <div class="swiwrap">
         <button class="myBtn" @click="myStartStop">
-            Qubey Jump
+            Qubey Falls
         </button>
     </div>
 </template>

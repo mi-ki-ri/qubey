@@ -1,13 +1,13 @@
 <template>
     <div class="myQubeyWrap">
         <div class="myQubeyLane">
-            <div class="myGuide"
+            <div  v-bind:class="myGuideClassObject"
                 v-bind:key="`${finalInst}${key}`" v-for="(num,key) in my16s"
                 v-bind:style="{top: key * 32 + 'px'}"
                 @click="setObj(key, $event)">
                 ・
             </div>
-            <div class="myObj"
+            <div v-bind:class="myObjClassObject"
                 v-bind:style="{top: obj.grid * 32 + 'px'}"
                 v-bind:key="key" v-for="(obj,key) in objs"
                 @click="delObj(key, $event)"
@@ -132,6 +132,22 @@ export default {
                 return 1
             }
             return -1
+        },
+        myGuideClassObject: function(){
+            return{
+                myGuide: true,
+                hat: this.finalInst == "hat",
+                snare: this.finalInst == "snare",
+                kick: this.finalInst == "kick"
+            }
+        },
+        myObjClassObject: function(){
+            return{
+                myObj: true,
+                hat: this.finalInst == "hat",
+                snare: this.finalInst == "snare",
+                kick: this.finalInst == "kick"
+            }
         }
     }
 }
@@ -177,6 +193,18 @@ export default {
     position: absolute;
     top: 0;
 }
+.myObj.kick{
+    color: rgb(0,34,225);
+    background-color: rgba(0,34,225,0.25);
+}
+.myObj.snare{
+    color: rgb(225,0,86);
+    background-color: rgba(225,0,86,0.25);
+}
+.myObj.hat{
+    color: rgb(185,225,0);
+    background-color: rgba(185,225,0,0.25);
+}
 .myGuide{
     color: #ccc;
     height: 32px;
@@ -187,7 +215,18 @@ export default {
     top: 0;
 }
 
-.myGuide:nth-of-type( 4n +1 ){
-    color: #aaa;
+.myGuide.kick{
+    color: rgba(0, 34, 225, 0.5);
+}
+.myGuide.snare{
+    color: rgba(225, 0, 86, 0.5);
+}
+.myGuide.hat{
+    color: rgba(185, 225, 0, 0.5);
+    
+}
+
+.myGuide:nth-of-type( 4n ){
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 </style>
