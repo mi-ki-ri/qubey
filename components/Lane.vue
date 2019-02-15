@@ -23,29 +23,37 @@
 </template>
 
 <script>
-
+// tonejs
 import Tone from 'tone'
 
+// 音符オブジェクト
 const Obj = function( grid ){
     this.grid = grid
 }
 
 export default {
-    props: ["inst", "isStart"],
+    props: ["inst"],// どの楽器かの情報、String
     data() {
         return {
-            i: -1,
-            isMoving: false,
+            i: -1, // 演奏位置。初期は-1
+            isMoving: false, // 動いているかflg
             myLoop: new Tone.Loop((time)=>{
+
+                // tonejsのループオブジェクト。
+                // ここで作っておいて.start()で回す
+
+                // 16ステップ
                 this.i +=  1;
                 if( this.i >= 16 ){
                     this.i = 0;
                 }
                 console.log(this.i)
 
+                // もし音符オブジェクトがあればhit
                 for( let obj of this.objs ){
                     if( obj.grid == this.i ){
                         console.log("hit")
+                        // ヒットしたらinstの種類に応じ音を鳴らす
                         switch (this.finalInst){
                             case "hat":
                                 this.hat.triggerAttackRelease( "16n");
@@ -66,12 +74,14 @@ export default {
 
 
             }, "16n"),
-            objs: [],
+            objs: [], // 音符オブジェクトの配列
             hat: new Tone.NoiseSynth({
+                // ハイハットをエミュレートしたシンセ
                 type: "pink",
                 volume: -24
             }).toMaster(),
             snare: new Tone.NoiseSynth({
+                // スネアの残響をシミュレート
                 envelope  : {
                     attack  : 0.025 ,
                     decay  : 0.12 ,
@@ -80,6 +90,7 @@ export default {
                 volume: -18
             }).toMaster(),
             snareRim: new Tone.Synth({
+                // スネアのバチが当たった音
                 oscillator  : {
                     type  : "sine"
                 }  ,
@@ -91,17 +102,18 @@ export default {
                 volume: -36
             }).toMaster(),
             kick: new Tone.Synth({
+                // キックをシミュレート
                 oscillator  : {
                     type  : "sine"
                 }  ,
             }).toMaster(),
-            my16s: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
-            finalInst: this.inst,
-            finalIsStart: this.isStart
+            my16s: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], // 16ステップを持っておく
+            finalInst: this.inst, // 渡されたpropsのインスト情報を確定する
         }
     },
     methods:{
         QBStart: function(){
+            // Start/Stop。まずトグルして動いていたらstart, いなかったらstop
             this.isMoving = ! this.isMoving
             if( this.isMoving == true ){
                 this.myLoop.start(0)
@@ -112,15 +124,14 @@ export default {
             }
         },
         setObj: function(key,e){
-            //console.log( e.offsetY )
-            //let gridNum = Math.floor(e.offsetY / 32)
-            //console.log(gridNum)
-
+            // keyの場所にobjを作り、objsに格納
             this.objs.push( new Obj( key ) )
             
 
         },
         delObj: function(key, e){
+            // keyの場所にあるobjを消す？
+            //TODO: 動作確認
             this.objs.splice(key, 1)
             e.preventDefault();
             e.stopPropagation();
@@ -128,12 +139,14 @@ export default {
     },
     computed:{
         snareOrElse: function(){
+            // snareだけ逆回転する
             if( this.finalInst == "snare" ){
                 return 1
             }
             return -1
         },
         myGuideClassObject: function(){
+            // myGuideにつけるCSSのクラス
             return{
                 myGuide: true,
                 hat: this.finalInst == "hat",
@@ -142,6 +155,7 @@ export default {
             }
         },
         myObjClassObject: function(){
+            // myObjにつけるCSSのクラス
             return{
                 myObj: true,
                 hat: this.finalInst == "hat",

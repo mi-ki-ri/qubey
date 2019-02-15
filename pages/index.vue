@@ -3,9 +3,9 @@
     <section class="container">
       <start-switch @startStop="startStop" />
       <section class="lanes">
-        <lane inst="kick" isStart="this.isStart" ref="kick" />
-        <lane inst="snare" isStart="this.isStart" ref="snare" />        
-        <lane inst="hat" isStart="this.isStart" ref="hat" />
+        <lane inst="kick" ref="kick" />
+        <lane inst="snare" ref="snare" />        
+        <lane inst="hat" ref="hat" />
       </section>
     </section>
   </div>
@@ -17,20 +17,20 @@ import StartSwitch from "~/components/StartSwitch.vue"
 
 export default {
   components: {
-    StartSwitch,
-    Lane
+    StartSwitch, // スイッチ
+    Lane // キュービーが落ちるレーン
   },
   data(){return{
     isStart: false
   }},
   methods:{
     startStop:function(){
+      // start toggle
       this.isStart = ! this.isStart
 
+      // ref="" で指定した名前でイベントを呼べる
       this.$refs.kick.QBStart();
-
       this.$refs.snare.QBStart();
-
       this.$refs.hat.QBStart();
     }
   }
